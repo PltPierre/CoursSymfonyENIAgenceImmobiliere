@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} {{ bien.nom }} {% endblock %}
+
+{% block bienActive %}active{% endblock %}
+
+{% block contenu %}
+    <section class="row d-flex justify-content-center">
+
+        <div class="row d-flex justify-content-center w-50">
+            <h1>{{ bien.nom }}</h1>
+            <img src="{{ bien.urlImg }}" class="img-fluid rounded mx-auto d-block" style="max-width: 25%">
+            <p>{{ bien.description }}</p>
+            <p>{{ bien.dateCreation | date("d/m/Y") }}</p>
+            <p>{{ bien.prix }} €</p>
+            {% if bien.avecJardin %}<p>Ce bien possède un jardin</p>{% endif %}
+            <p>Ce bien est géré par : <strong><i>{{ bien.agent.fullName }}</i></strong></p>
+            {% if bien.acheteurs is not empty %}
+
+                <p>Liste des acheteurs potentiel :</p>
+                <ul>
+                    {% for acheteur in bien.acheteurs %}
+                        <li>{{ acheteur.fullName }}</li>
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+
+
+        </div>
+
+    </section>
+
+{% endblock %}

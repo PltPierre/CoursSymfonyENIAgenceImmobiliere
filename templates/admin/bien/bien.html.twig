@@ -1,0 +1,69 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block contenu %}
+
+    <section class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center w-75">
+            <h2 class="me-2">MES BIENS</h2>
+                {% if biens is empty %}
+                    <br>
+                    <div class="container">
+                        <h1 class="me-2">IL N'Y A PAS DE BIEN DISPONIBLE</h1>
+                    </div>
+                {% else %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Etat</th>
+                                <th scope="col">m²</th>
+                                <th scope="col">Date de Création</th>
+                                <th scope="col">Avec Jardin ?</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set counter = 1 %}
+                            {% for bien in biens %}
+                                <tr>
+                                    <th scope="row">{{ counter }}</th>
+                                    <td>{{ bien.nom }}</td>
+                                    <td>{{ bien.description }}</td>
+                                    <td>{{ bien.prix }}€</td>
+                                    <td>{{ bien.etat }}</td>
+                                    <td>{{ bien.metresCarres }} m²</td>
+                                    <td>{{ bien.dateCreation | date("d/m/Y") }}</td>
+                                    <td>
+                                        {% if bien.avecJardin == true %}
+                                            Oui
+                                        {% else %}
+                                            Non
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="btn" href="{{ path('app_admin_supprimer', {'id': bien.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ce bien ?')"><i class="fa-solid fa-trash"></i></a>
+                                        <a class="btn" href="{{ path('app_admin_modifier', {'id': bien.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    </td>
+                                </tr>
+                                {% set counter = counter+1 %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                <a href="{{ path('app_admin_ajouter') }}" class="btn btn-primary mx-2">Ajouter un bien</a>
+
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+        </div>
+
+    </section>
+
+{% endblock %}

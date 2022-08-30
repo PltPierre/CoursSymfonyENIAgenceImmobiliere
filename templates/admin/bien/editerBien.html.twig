@@ -1,0 +1,29 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block contenu %}
+
+    <section>
+
+        <div class="mx-auto my-auto" style="width: 50%">
+            {{ form_start(form) }}
+                {{ form_row(form.nom) }}
+                <div class="mb-3">
+                    {{ form_label(form.agent) }} <br>
+                    {{ form_widget(form.agent, { 'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.agent) }}
+                </div>
+                {{ form_rest(form) }}
+                {% if app.request.get('_route') == "app_admin_ajouter" %}
+                    <button class="btn btn-danger" type="submit">Ajouter</button>
+                {% else %}
+                    <button class="btn btn-danger" type="submit" onclick="return confirm('Etes-vous sur de vouloir modifier ce bien ?')">Modifier</button>
+                {% endif %}
+                <button class="btn btn-success">Annuler</button>
+            {{ form_end(form) }}
+        </div>
+
+    </section>
+
+
+{% endblock %}

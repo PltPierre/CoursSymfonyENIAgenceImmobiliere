@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Mes Biens {% endblock %}
+
+{% block bienActive %}active{% endblock %}
+
+{% block contenu %}
+
+    <section class="row d-flex justify-content-center h-75 mt-4 w-100">
+        <div class="row row-cols-1 row-cols-md-7 w-100 m-auto">
+            {% for bien in biens %}
+
+                <div class="card mx-2 mt-3" style="width: 18rem;">
+                    <img src="{{ bien.urlImg }}" class="card-img-top mt-2" alt="..." style="height: 35%;">
+                    <div class="card-body">
+                        <h5 class="card-title test__titre">{{ bien.nom }}</h5>
+                        <p class="card-text">{{ bien.description }}</p>
+                        <p class="card-text">{{ bien.prix }} €</p>
+                        <p class="card-text">{{ bien.dateCreation | date("d/m/Y") }}</p>
+                        <a href="{{ path('app_bien_info', {'id': bien.id}) }}" class="btn btn-primary">VOIR INFORMATIONS</a>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </section>
+
+
+{% endblock %}
